@@ -11,12 +11,28 @@ from bs4 import BeautifulSoup
 
 res = requests.get("https://www.goodreads.com/book/show/58341222-reminders-of-him")
 soup = BeautifulSoup(res.text,"html.parser")
-book_title = soup.select_one("#bookTitle").text
 
+main_div = soup.select_one("#topcol")
+book_title = main_div.select_one("#bookTitle").text.replace("      ","").replace("\n","")
+author = main_div.select_one("#bookAuthors .authorName > span").text
+img_url = main_div.select_one("#coverImage").get("src")
+print(book_title,author,img_url)
 
-print(book_title)
+#=========================================
+# book title
+# book_title = soup.select_one("#bookTitle").text
+# book_title = book_title.replace("      ","").replace("\n","")
 
-# book_list = []
-# for book in books:
-#     book_title = book.get("alt")
-#     book_list.append(book_title)
+# author
+# author = soup.select_one("#bookAuthors .authorName > span")
+# if author == None:
+#     author = "error"
+# else:
+#     author = author.text
+
+#img
+# img = soup.select_one("#coverImage")
+# if img:
+#     img_url = img.get("src")
+# else:
+#     img_url = "error"
