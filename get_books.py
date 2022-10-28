@@ -13,7 +13,13 @@ res = requests.get("https://www.goodreads.com/book/show/58341222-reminders-of-hi
 soup = BeautifulSoup(res.text,"html.parser")
 
 main_div = soup.select_one(".BookPageTitleSection")
-book_title = main_div.select_one("[data-testid='bookTitle']") #.text.replace("      ","").replace("\n","")
+if main_div==None:
+    main_div = soup.select_one("#metacol")
+    book_title = main_div.select_one('#bookTitle').text.replace("      ","").replace("\n","")
+    print("version A")
+else:
+    book_title = main_div.select_one('[data-testid="bookTitle"]').text
+    print("version B")
 # author = main_div.select_one("#bookAuthors .authorName > span").text
 # img_url = main_div.select_one("#coverImage").get("src")
 # print(book_title,author,img_url)
