@@ -4,6 +4,7 @@ import json
 
 #======custom func============
 from link import get_db_data
+from get_most_read import get_title_and_image
 
 
 with open("config.json") as json_file:
@@ -15,3 +16,4 @@ sql_query = """
         """
 
 print(get_db_data(config,sql_query))
+print(get_title_and_image("https://www.goodreads.com/genres/most_read/comics"))
