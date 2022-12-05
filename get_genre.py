@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
+
+
+
 url = "https://www.goodreads.com/genres/list"
 page = 2
 genres = []
-
 
 while page<15:
     res = requests.get(url)
