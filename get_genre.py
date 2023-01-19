@@ -17,4 +17,3 @@ def genre_list():
         page = page+1
     return genres
 
-print(genre_list())

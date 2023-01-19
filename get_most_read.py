@@ -2,26 +2,15 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_title_and_image(url):
+def get_links(url):
     res = requests.get(url)
     soup = BeautifulSoup(res.text,"html.parser")
     book_list = []
-    book_image = soup.select(".coverWrapper a")
-    if (len(book_image)!=0):
-        image_list = []
-        for image in book_image:
-            book = image.select_one(".bookImage")
-            book_title = book.get("alt")
-            book_list.append(book_title)
-
-            image_url = "https://www.goodreads.com/" + image.get("href")
-            image_list.append(image_url)
-        return image_list, book_list
-    else:
-        print("error")
-
-
-
-
-    
-
+    book_links = soup.select(".coverWrapper a")
+    link_list = []
+    if (len(book_links)!=0):
+        for link in book_links:
+            book_link = link.get("href")
+            book_link = "https://www.goodreads.com/" + book_link
+            link_list.append(book_link)
+        return link_list

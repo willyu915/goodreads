@@ -4,17 +4,33 @@ import json
 
 #======custom func============
 from link import get_db_data
-from get_most_read import get_title_and_image
+from get_most_read import get_links
 from get_genre import genre_list
+from get_books import get_book_info
 
 
-with open("config.json") as json_file:
-    config = json.load(json_file)
+genres = genre_list()
+all_book_data = []
+for genre in genres[:10]:
+    print("genre:",genre)
+    most_read_books = get_links("https://www.goodreads.com/genres/most_read/"+genre)
+    for book_url in most_read_books:
+        print("book_url:",book_url)
+        book_information = get_book_info(book_url)
+        all_book_data.append(book_information)
 
-sql_query = """
-        SELECT *
-        FROM books
-        """
+file  = open("all_books.txt","w")
+for i in all_book_data:
+    file.write(str(i)+"\n")
+file.close()
 
-print(get_db_data(config,sql_query))
-print(get_title_and_image("https://www.goodreads.com/genres/most_read/comics"))
+
+# with open("config.json") as json_file:
+#     config = json.load(json_file)
+
+# sql_query = """
+#         SELECT *
+#         FROM books
+#         """
+
+# print(get_db_data(config,sql_query))
