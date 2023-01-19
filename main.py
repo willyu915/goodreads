@@ -5,6 +5,7 @@ import json
 #======custom func============
 from link import get_db_data
 from get_most_read import get_title_and_image
+from get_genre import genre_list
 
 
 with open("config.json") as json_file:

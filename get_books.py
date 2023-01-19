@@ -27,19 +27,19 @@ else:
 print(book_title)
 #=========================================
 # book title
-# book_title = soup.select_one("#bookTitle").text
-# book_title = book_title.replace("      ","").replace("\n","")
+book_title = soup.select_one("#bookTitle").text
+book_title = book_title.replace("      ","").replace("\n","")
 
 # author
-# author = soup.select_one("#bookAuthors .authorName > span")
-# if author == None:
-#     author = "error"
-# else:
-#     author = author.text
+author = soup.select_one("#bookAuthors .authorName > span")
+if author == None:
+    author = "error"
+else:
+    author = author.text
 
 #img
-# img = soup.select_one("#coverImage")
-# if img:
-#     img_url = img.get("src")
-# else:
-#     img_url = "error"
+img = soup.select_one("#coverImage")
+if img:
+    img_url = img.get("src")
+else:
+    img_url = "error"
