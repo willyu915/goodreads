@@ -19,7 +19,7 @@ def get_book_info(book_url):
     else:
         author = author.text
 
-    #title
+    # title
     book_title = soup.select_one("title").text
     if author == "error":
         author = book_title.split(' by ')[1].split(" | ")[0]
@@ -28,12 +28,24 @@ def get_book_info(book_url):
     book_data.append(author)
     book_data.append(book_name)
 
-    #img
+    # img
     img = soup.select_one("#coverImage")
     if img==None:
         img = soup.select_one(".ResponsiveImage")
     img_url = img.get("src")
     book_data.append(img_url)
+
+    # average_rate
+    average_rate = soup.select_one(".RatingStatistics__rating")
+    book_data.append(average_rate.text)
+
+    # Ratings
+    ratings = soup.select_one(".RatingStatistics__meta > span")
+    book_data.append(ratings.text)
+
+    #Reviews
+    
+
     return book_data
 
-# print(get_book_info("https://www.goodreads.com/book/show/929.Memoirs_of_a_Geisha"))
+print(get_book_info("https://www.goodreads.com/book/show/61190260-the-librarian-of-burned-books"))
