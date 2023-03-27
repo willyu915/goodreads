@@ -11,13 +11,19 @@ from get_books import get_book_info
 
 genres = genre_list()
 all_book_data = []
-for genre in genres[15:30]:
+for genre in genres[40:42]:
     print("genre:",genre)
     most_read_books = get_links("https://www.goodreads.com/genres/most_read/"+genre)
-    for book_url in most_read_books:
-        print("book_url:",book_url)
-        book_information = get_book_info(book_url)
-        all_book_data.append(book_information)
+    if most_read_books != None:
+        for book_url in most_read_books[3:5]:
+            print("book_url:",book_url)
+            book_information = get_book_info(book_url)
+            # debug
+            # with open("html_dog_man.txt","w") as file:
+            #     file.write(book_information)
+            # exit()
+            #======
+            all_book_data.append(book_information)
 
 file  = open("all_books.txt","w")
 for i in all_book_data:

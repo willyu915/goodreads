@@ -15,12 +15,13 @@ def get_book_info(book_url):
               "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
              }
     res = requests.get(book_url, headers=header)
+    # return res.text
     soup = BeautifulSoup(res.text,"html.parser")
     book_data = []
 
     # author
     #author = soup.select_one("#bookAuthors .authorName > span")
-    author = soup.select_one("#ContributorLink .ContributorLink__name")
+    author = soup.select_one(".ContributorLink .ContributorLink__name")
     if author == None:
         author = "error"
     else:
@@ -35,6 +36,7 @@ def get_book_info(book_url):
     except Exception:
         print("title block error",Exception)
         author = "not found"
+        book_name = "no title"
     book_data.append(author)
     book_data.append(book_name)
 
@@ -42,12 +44,18 @@ def get_book_info(book_url):
     img = soup.select_one("#coverImage")
     if img==None:
         img = soup.select_one(".ResponsiveImage")
-    img_url = img.get("src")
+    if img!=None:
+        img_url = img.get("src")
+    else:
+        img_url="image not found"
     book_data.append(img_url)
 
     # average_rate
     average_rate = soup.select_one(".RatingStatistics__rating")
-    book_data.append(average_rate.text)
+    if average_rate!=None:
+        book_data.append(average_rate.text)
+    else:
+        book_data.append("average_rate not found")
 
     # Ratings & Reviews
     ratings = soup.select_one(".RatingStatistics__meta")
