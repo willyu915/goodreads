@@ -39,13 +39,20 @@ def get_book_info(book_url):
     average_rate = soup.select_one(".RatingStatistics__rating")
     book_data.append(average_rate.text)
 
-    # Ratings
-    ratings = soup.select_one(".RatingStatistics__meta > span")
-    book_data.append(ratings.text)
-
-    #Reviews
+    # Ratings & Reviews
+    ratings = soup.select_one(".RatingStatistics__meta")
+    numbers = ratings.get("aria-label")
+    ratings_amount = numbers.split()[0].replace(",", "")
+    reviews_amount = numbers.split()[3].replace(",", "")
+    book_data.append(ratings_amount)
+    book_data.append(reviews_amount)
     
-
+    #publish date
+    publish_date = soup.select_one(".FeaturedDetails > p:nth-child(2)")
+    publish_date_list = publish_date.text.split()[2:]
+    publish_date_number = "".join(publish_date_list).replace(",", "")
+    book_data.append(publish_date_number)
     return book_data
 
-print(get_book_info("https://www.goodreads.com/book/show/61190260-the-librarian-of-burned-books"))
+
+print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
