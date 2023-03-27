@@ -11,7 +11,7 @@ from get_books import get_book_info
 
 genres = genre_list()
 all_book_data = []
-for genre in genres[:10]:
+for genre in genres[15:30]:
     print("genre:",genre)
     most_read_books = get_links("https://www.goodreads.com/genres/most_read/"+genre)
     for book_url in most_read_books:

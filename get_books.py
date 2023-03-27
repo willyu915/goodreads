@@ -8,23 +8,33 @@ from bs4 import BeautifulSoup
 
 def get_book_info(book_url):
 
-    res = requests.get(book_url)
+    header = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+              "Accept-Encoding" : "gzip, deflate, br",
+              "Accept-Language" : "en-US,en;q=0.9",
+              "Host" : "www.goodreads.com",
+              "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+             }
+    res = requests.get(book_url, headers=header)
     soup = BeautifulSoup(res.text,"html.parser")
     book_data = []
 
     # author
-    author = soup.select_one("#bookAuthors .authorName > span")
+    #author = soup.select_one("#bookAuthors .authorName > span")
+    author = soup.select_one("#ContributorLink .ContributorLink__name")
     if author == None:
         author = "error"
     else:
         author = author.text
 
     # title
-    book_title = soup.select_one("title").text
-    if author == "error":
-        author = book_title.split(' by ')[1].split(" | ")[0]
-    book_name = book_title.split(' by ')[0]
-    
+    try:
+        book_title = soup.select_one("title").text
+        if author == "error":
+            author = book_title.split(' by ')[1].split(" | ")[0]
+        book_name = book_title.split(' by ')[0]
+    except Exception:
+        print("title block error",Exception)
+        author = "not found"
     book_data.append(author)
     book_data.append(book_name)
 
@@ -55,4 +65,4 @@ def get_book_info(book_url):
     return book_data
 
 
-print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
+#print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
