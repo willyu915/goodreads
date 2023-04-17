@@ -4,18 +4,17 @@ import json
 
 #======custom func============
 from link import get_db_data,insert_db_data
-from get_most_read import get_links
+from get_most_read import get_link_id
 from get_genre import genre_list
 from get_books import get_book_info
 
-
 genres = genre_list()
 all_book_data = []
-for genre in genres[70:80]:
+for genre in genres[71:72]:
     print("genre:",genre)
-    most_read_books = get_links("https://www.goodreads.com/genres/most_read/"+genre)
+    most_read_books = get_link_id("https://www.goodreads.com/genres/most_read/"+genre)
     if most_read_books != None:
-        for book_url in most_read_books[:5]:
+        for book_url,book_id in most_read_books[:5]:
             print("book_url:",book_url)
             book_information = get_book_info(book_url)
             # debug

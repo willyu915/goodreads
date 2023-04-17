@@ -2,6 +2,7 @@
 # Ratings
 # reviews
 # publish_date
+# awards => string
 
 import requests
 from bs4 import BeautifulSoup
@@ -70,7 +71,9 @@ def get_book_info(book_url):
     publish_date_list = publish_date.text.split()[2:]
     publish_date_number = "".join(publish_date_list).replace(",", "")
     book_data.append(publish_date_number)
+
+    
     return book_data
 
-
-#print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
+if __name__ == "__main__":
+    print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
