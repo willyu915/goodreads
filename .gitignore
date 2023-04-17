@@ -1,3 +1,4 @@
 config.json
 sql_notes.txt
 __pycache__/
+*.txt
