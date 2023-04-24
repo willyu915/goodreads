@@ -60,21 +60,34 @@ def get_book_info(book_url):
 
     # Ratings & Reviews
     ratings = soup.select_one(".RatingStatistics__meta")
-    numbers = ratings.get("aria-label")
-    ratings_amount = numbers.split()[0].replace(",", "")
-    reviews_amount = numbers.split()[3].replace(",", "")
+    if ratings == None:
+        ratings_amount = "no ratings"
+        reviews_amount = "no reviews"
+    else: 
+        numbers = ratings.get("aria-label")
+        ratings_amount = numbers.split()[0].replace(",", "")
+        reviews_amount = numbers.split()[3].replace(",", "")
     book_data.append(ratings_amount)
     book_data.append(reviews_amount)
     
     #publish date
     publish_date = soup.select_one(".FeaturedDetails > p:nth-child(2)")
-    publish_date_list = publish_date.text.split()[2:]
-    publish_date_number = "".join(publish_date_list).replace(",", "")
+    if publish_date == None:
+        publish_date_number = "no publish date"
+    else:
+        publish_date_list = publish_date.text.split()[2:]
+        publish_date_number = "".join(publish_date_list).replace(",", "")
     book_data.append(publish_date_number)
 
     #awards
-    
+    awards = soup.select_one(".TruncatedContent__text.TruncatedContent__text--small > span:nth-child(1) > a")
+    if awards == None:
+        awards = "no awards"
+    else:
+        awards = awards.text
+    book_data.append(awards)
 
+ 
     
     return book_data
 
