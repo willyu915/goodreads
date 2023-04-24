@@ -6,7 +6,12 @@
 without module
 """
 
+"""
+{"February":"02", "April":"04", "October":"10"}
+"""
 
-"""
-with module
-"""
+def date_format(orig_str):
+    
+    return date_str
+
+print(date_format('February42020')) # => '20200204'

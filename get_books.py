@@ -4,6 +4,7 @@
 # publish_date
 # awards => string
 
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -16,7 +17,8 @@ def get_book_info(book_url):
               "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
              }
     res = requests.get(book_url, headers=header)
-    # return res.text
+    with open("html.txt","w") as file:
+        file.write(res.text)
     soup = BeautifulSoup(res.text,"html.parser")
     book_data = []
 
@@ -80,11 +82,11 @@ def get_book_info(book_url):
     book_data.append(publish_date_number)
 
     #awards
-    awards = soup.select_one(".TruncatedContent__text.TruncatedContent__text--small > span:nth-child(1) > a")
+    awards = soup.select_one("script[type='application/ld+json']")
     if awards == None:
         awards = "no awards"
     else:
-        awards = awards.text
+        awards = json.loads(awards.text)['awards']
     book_data.append(awards)
 
  
@@ -92,4 +94,8 @@ def get_book_info(book_url):
     return book_data
 
 if __name__ == "__main__":
-    print(get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15"))
+    for i in range(10):
+        data = get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15")
+        if data[0] != 'not found':
+            print(data)
+            break
