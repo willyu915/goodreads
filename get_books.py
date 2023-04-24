@@ -72,6 +72,9 @@ def get_book_info(book_url):
     publish_date_number = "".join(publish_date_list).replace(",", "")
     book_data.append(publish_date_number)
 
+    #awards
+    
+
     
     return book_data
 
