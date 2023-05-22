@@ -11,7 +11,18 @@ without module
 """
 
 def date_format(orig_str):
+    year = orig_str[-4:]
+    try: 
+        date = str(int(orig_str[-6:-4]))
+        month = orig_str[:-6]
+    except:
+        date = "0"+orig_str[-5]
+        month = orig_str[:-5]
     
-    return date_str
+    month_dict = {"February":"02", "April":"04", "October":"10"}
+    month = month_dict.get(month)
+    
 
-print(date_format('February42020')) # => '20200204'
+    return year + month + date
+
+print(date_format('February252020')) # => '20200204'
