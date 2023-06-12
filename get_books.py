@@ -7,6 +7,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+from date_format import datetime_format
 
 def get_book_info(book_url):
 
@@ -42,6 +43,7 @@ def get_book_info(book_url):
         book_name = "no title"
     book_data.append(author)
     book_data.append(book_name)
+    book_data.append(book_url)
 
     # img
     img = soup.select_one("#coverImage")
@@ -79,14 +81,15 @@ def get_book_info(book_url):
     else:
         publish_date_list = publish_date.text.split()[2:]
         publish_date_number = "".join(publish_date_list).replace(",", "")
-    book_data.append(publish_date_number)
+        publish_date = datetime_format(publish_date_number)
+    book_data.append(publish_date)
 
     #awards
     awards = soup.select_one("script[type='application/ld+json']")
     if awards == None:
         awards = "no awards"
     else:
-        awards = json.loads(awards.text)['awards']
+        awards = json.loads(awards.text).get("awards","no awards")
     book_data.append(awards)
 
  
@@ -95,7 +98,7 @@ def get_book_info(book_url):
 
 if __name__ == "__main__":
     for i in range(10):
-        data = get_book_info("https://www.goodreads.com/book/show/830502.It?ref=nav_sb_ss_1_15")
+        data = get_book_info("https://www.goodreads.com/book/show/40274755-bloodchild-and-other-stories")
         if data[0] != 'not found':
             print(data)
             break
