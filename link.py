@@ -1,6 +1,6 @@
 # coding=big5
 
-import mysql
+import mysql,json
 import mysql.connector
 
 def get_db_data(sql_config,query):
@@ -24,3 +24,12 @@ def insert_db_data(sql_config,query,temp_data):
     cnxn.close()
     cursor.close()
     return "insert success"
+
+if __name__ == "__main__":
+    with open("config.json") as json_file:
+        config = json.load(json_file)
+    sql_query = """
+            SELECT *
+            FROM books
+            """
+    print(get_db_data(config,sql_query))

@@ -18,10 +18,17 @@ def get_book_info(book_url):
               "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
              }
     res = requests.get(book_url, headers=header)
-    with open("html.txt","w") as file:
-        file.write(res.text)
     soup = BeautifulSoup(res.text,"html.parser")
     book_data = []
+
+    #id
+    get_id = book_url.split("/")[5].split("-")[0]
+    if get_id.isdigit():
+        book_id = get_id
+    else:
+        print("w")
+        book_id = '99999999'
+    book_data.append(book_id)
 
     # author
     #author = soup.select_one("#bookAuthors .authorName > span")
@@ -38,6 +45,8 @@ def get_book_info(book_url):
             author = book_title.split(' by ')[1].split(" | ")[0]
         book_name = book_title.split(' by ')[0]
     except Exception:
+        with open("html.txt","w") as file:
+            file.write(res.text)
         print("title block error",Exception)
         author = "not found"
         book_name = "no title"
@@ -98,7 +107,7 @@ def get_book_info(book_url):
 
 if __name__ == "__main__":
     for i in range(10):
-        data = get_book_info("https://www.goodreads.com/book/show/40274755-bloodchild-and-other-stories")
+        data = get_book_info("https://www.goodreads.com/book/show/59627675-when-the-day-com")
         if data[0] != 'not found':
             print(data)
             break

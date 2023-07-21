@@ -17,7 +17,7 @@ def get_link_id(url):
             else:
                 book_link = "Not Found"
             book_id = link_id.get("id").split("_")[-1]
-            book_link = "https://www.goodreads.com/" + book_link
+            book_link = "https://www.goodreads.com" + book_link
             book_list.append(book_link)
             book_list.append(book_id)
             link_id_list.append(book_list)
