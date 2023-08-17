@@ -69,13 +69,13 @@ def get_book_info(book_url):
     if average_rate!=None:
         book_data.append(average_rate.text)
     else:
-        book_data.append("average_rate not found")
+        book_data.append("0")
 
     # Ratings & Reviews
     ratings = soup.select_one(".RatingStatistics__meta")
     if ratings == None:
-        ratings_amount = "no ratings"
-        reviews_amount = "no reviews"
+        ratings_amount = "0"
+        reviews_amount = "0"
     else: 
         numbers = ratings.get("aria-label")
         ratings_amount = numbers.split()[0].replace(",", "")
@@ -86,7 +86,7 @@ def get_book_info(book_url):
     #publish date
     publish_date = soup.select_one(".FeaturedDetails > p:nth-child(2)")
     if publish_date == None:
-        publish_date_number = "no publish date"
+        publish_date_number = "10000101"
     else:
         publish_date_list = publish_date.text.split()[2:]
         publish_date_number = "".join(publish_date_list).replace(",", "")
@@ -100,9 +100,6 @@ def get_book_info(book_url):
     else:
         awards = json.loads(awards.text).get("awards","no awards")
     book_data.append(awards)
-
- 
-    
     return book_data
 
 if __name__ == "__main__":
