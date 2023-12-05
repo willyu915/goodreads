@@ -17,3 +17,5 @@ def genre_list():
         page = page+1
     return genres
 
+if __name__ == "__main__":
+    print(genre_list())

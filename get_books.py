@@ -5,6 +5,7 @@
 # awards => string
 
 import json
+import time
 import requests
 from bs4 import BeautifulSoup
 from date_format import datetime_format
@@ -104,7 +105,9 @@ def get_book_info(book_url):
 
 if __name__ == "__main__":
     for i in range(10):
-        data = get_book_info("https://www.goodreads.com/book/show/59627675-when-the-day-com")
-        if data[0] != 'not found':
+        data = get_book_info("https://www.goodreads.com/book/show/43708708-white-fragility")
+        if data[1] != 'not found':
             print(data)
             break
+        time.sleep(2)
+        print("!!!")

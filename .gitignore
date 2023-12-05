@@ -3,3 +3,4 @@ config_william.json
 __pycache__/
 *.txt
 .DS_Store
+.vscode/

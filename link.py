@@ -1,11 +1,13 @@
 # coding=big5
 
-import mysql,json
+import mysql
+import json
 import mysql.connector
 
-#https://freedb.tech/dashboard/index.php
+# https://freedb.tech/dashboard/index.php
 
-def get_db_data(sql_config,query):
+
+def get_db_data(sql_config, query):
     out_data = []
     cnxn = mysql.connector.connect(**sql_config)
     cursor = cnxn.cursor()
@@ -17,7 +19,8 @@ def get_db_data(sql_config,query):
         out_data.append(list(j))
     return out_data
 
-def insert_db_data(sql_config,query,temp_data):
+
+def insert_db_data(sql_config, query, temp_data):
 
     cnxn = mysql.connector.connect(**sql_config)
     cursor = cnxn.cursor()
@@ -27,7 +30,8 @@ def insert_db_data(sql_config,query,temp_data):
     cursor.close()
     return "insert success"
 
-def create_db_table(sql_config,query):
+
+def create_db_table(sql_config, query):
     cnxn = mysql.connector.connect(**sql_config)
     cursor = cnxn.cursor()
     cursor.execute(query)
@@ -35,14 +39,29 @@ def create_db_table(sql_config,query):
     cnxn.close()
     return "create success"
 
+
+def delete_db_data(sql_config, query):
+    cnxn = mysql.connector.connect(**sql_config)
+    cursor = cnxn.cursor()
+    cursor.execute(query)
+    cnxn.commit()
+    cursor.close()
+    cnxn.close()
+    return "delete success"
+
+
 if __name__ == "__main__":
     with open("config.json") as json_file:
         config = json.load(json_file)
-    sql_query = """
-                select * from books
-                """
-    print(get_db_data(config,sql_query))
+    # sql_query = """
+    #             delete from mains where genre <> '18th-century'
+    #             """
+    # print(delete_db_data(config, sql_query))
 
+    sql_query = """
+                select count(id) from mains
+                """
+    print(get_db_data(config, sql_query))
 
 """
 CREATE TABLE books (id VARCHAR(255), 

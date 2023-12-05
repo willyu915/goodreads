@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 
 def get_link_id(url):
     res = requests.get(url)
-    soup = BeautifulSoup(res.text,"html.parser")
+    soup = BeautifulSoup(res.text, "html.parser")
     book_links_ids = soup.select(".coverWrapper")
     link_id_list = []
-    if (len(book_links_ids)!=0):
+    if (len(book_links_ids) >= 100):
         for link_id in book_links_ids:
             book_list = []
             # import pdb;pdb.set_trace()
@@ -22,6 +22,7 @@ def get_link_id(url):
             book_list.append(book_id)
             link_id_list.append(book_list)
         return link_id_list
+
 
 if __name__ == "__main__":
     print(get_link_id("https://www.goodreads.com/genres/most_read/historical-fiction"))
